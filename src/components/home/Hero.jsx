@@ -29,11 +29,10 @@ const slides = [
   }
 ];
 
-
-
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Auto-rotate slides every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -43,6 +42,7 @@ const Hero = () => {
 
   return (
     <div className="relative h-[80vh] w-full overflow-hidden">
+      {/* Map through slides and render each one */}
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -50,21 +50,27 @@ const Hero = () => {
             index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
           }`}
           style={{
-            backgroundImage: `linear-gradient(to right, rgba(4, 7, 20, 0.8), rgba(4, 7, 20, 0.1)), url(${slide.image})`,
+            backgroundImage: `linear-gradient(to right, #0f0617cc 60%, #1a093bcc 100%, transparent), url(${slide.image})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         >
           <div className="container mx-auto h-full flex items-center justify-between px-4 md:px-20">
+            {/* Slide content with staggered animations */}
             <div className="max-w-xl text-white">
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">{slide.title}</h1>
-              <p className="text-lg mb-6 text-gray-300">{slide.description}</p>
+              <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-[fadeInDown_0.6s_ease-out]">
+                {slide.title}
+              </h1>
+              <p className="text-lg mb-6 text-gray-300 animate-[fadeInUp_0.6s_ease-out_0.3s_both]">
+                {slide.description}
+              </p>
+              {/* Button with enhanced animations matching other components */}
               <Link
                 to={`/${slide.type}/${slide.mediaId}`}
-                className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-md inline-flex items-center transition"
+                className="bg-[#00e5ff] hover:bg-[#00b8d9] text-[#181c2f] py-3 px-6 rounded-md inline-flex items-center transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_15px_rgba(0,229,255,0.6)] animate-[fadeInUp_0.6s_ease-out_0.6s_both]"
               >
                 <span className="mr-2">Watch Now</span>
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
                     d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
@@ -73,7 +79,8 @@ const Hero = () => {
                 </svg>
               </Link>
             </div>
-            <div className="hidden md:block w-[300px] rounded-lg overflow-hidden shadow-lg">
+            {/* Poster image with subtle hover animation */}
+            <div className="hidden md:block w-[300px] rounded-lg overflow-hidden shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_15px_rgba(0,229,255,0.4)]">
               <img src={slide.image} alt={slide.title} className="w-full h-auto" />
             </div>
           </div>
@@ -86,9 +93,10 @@ const Hero = () => {
           <button
             key={index}
             className={`h-2 rounded-full transition-all duration-300 ${
-              index === currentSlide ? 'w-8 bg-white' : 'w-2 bg-gray-500'
+              index === currentSlide ? 'w-8 bg-[#00e5ff]' : 'w-2 bg-gray-500 hover:bg-[#00e5ff]/50'
             }`}
             onClick={() => setCurrentSlide(index)}
+            aria-label={`Go to slide ${index + 1}`}
           ></button>
         ))}
       </div>
