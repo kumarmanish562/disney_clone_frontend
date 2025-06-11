@@ -1,91 +1,125 @@
 # Disney+ Hotstar Clone
 
-![Disney+ Hotstar Clone Screenshot](https://via.placeholder.com/900x450/0F0617/00E5FF?text=Disney%2B+Hotstar+Clone+Preview)
-
-This project is a modern clone of the Disney+ Hotstar streaming platform, built using **React**, **Vite**, and **Tailwind CSS**. It aims to provide a similar user experience with features such as movie and show listings, detailed views, authentication, and a responsive, animated UI.
+A modern, responsive streaming platform clone built with **React**, **Vite**, and **Tailwind CSS**. This project replicates the Disney+ Hotstar experience with movie and show listings, authentication, and a sleek animated UI.
 
 ---
 
-## ✨ Features
+## 🚀 Features
 
-- **Home Page**: Promotional banner, categories for movies and shows, and featured content.
-- **Movies Section**: Browse movies with interactive cards and detailed views for each movie.
-- **Shows Section**: Browse TV shows with cards and detailed views for each show.
-- **Authentication**: User login functionality to manage user sessions.
-- **Responsive Design**: Fully responsive and modern UI using Tailwind CSS.
-- **Dynamic Routing**: Seamless navigation between pages using React Router.
-- **Dark Theme**: Disney+ inspired dark mode with teal accent colors.
-- **Reusable Components**: Modular structure for easy maintenance and scalability.
+- Responsive design for all devices
+- Animated banners and interactive cards
+- Movie and TV show listings with details
+- User authentication (login)
+- Dynamic routing with React Router
+- Dark theme inspired by Disney+
+- Modular, reusable components
+- Easy to customize and extend
 
 ---
+
+## 🖼️ Preview
+
+| Home Page | Movies Page | TV Shows Page | Details Page | Login Page |
+|-----------|-------------|------------|-------------|------------|
+| ![Home](./src/assets/home.png) | ![Movies](./src/assets/movie.png) | ![TV Shows](./src/assets/tvshows.png) | ![Details](./src/assets/moviecard.png) | ![Login](./src/assets/login.png) |
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v16 or higher recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/kumarmanish562/disney_clone_frontend
+.git
+  
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. **Open your browser and visit:**
+   ```
+   http://localhost:5173
+   ```
 
 ## 📁 Project Structure
 
 ```
-disney-hotstar-clone
-├── src
-│   ├── assets              # Static assets (images, fonts)
-│   ├── components          # Reusable components
-│   ├── context             # Context API for state management
-│   ├── hooks               # Custom hooks
-│   ├── layouts             # Layout components
-│   ├── pages               # Page components
-│   ├── routes              # Application routing
-│   ├── utils               # Utility functions
-│   ├── App.jsx             # Main application component
-│   └── main.jsx            # Entry point of the application
-├── index.html              # Main HTML file
-├── package.json            # Project dependencies and scripts
-├── postcss.config.js       # PostCSS configuration
-├── tailwind.config.js      # Tailwind CSS configuration
-└── vite.config.js          # Vite configuration
+disney_clone_frontend/
+├── public/
+├── src/
+│   ├── assets/           # Images and static assets
+│   ├── components/       # React components
+│   ├── context/          # Context API for state management
+│   ├── hooks/            # Custom hooks
+│   ├── layouts/          # Layout components
+│   ├── pages/            # Page components
+│   ├── routes/           # Application routing
+│   ├── utils/            # Utility functions
+│   ├── App.jsx           # Main app component
+│   └── main.jsx          # Entry point
+├── package.json
+└── README.md
 ```
 
 ---
 
-## 🚀 Getting Started
+## 📸 Screenshots
 
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd disney-hotstar-clone
-   ```
+### Home Page
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+![Home Page](./src/assets/home.png)
 
-3. **Run the development server**:
-   ```bash
-   npm run dev
-   ```
+### Movies Page
 
-4. **Open your browser** and navigate to `http://localhost:5173` to view the application.
+![Movies Page](./src/assets/movie.png)
 
----
+### TV Shows Page
 
-## 🛠️ Technologies Used
+![TV Shows Page](./src/assets/tvshows.png)
 
-- **React**: JavaScript library for building user interfaces.
-- **Vite**: Fast build tool and development server.
-- **Tailwind CSS**: Utility-first CSS framework for styling.
-- **React Router**: For client-side routing.
-- **Axios**: For API requests.
+### Details Page
+
+![Details Page](./src/assets/moviecard.png)
+
+### Login Page
+
+![Login Page](./src/assets/login.png)
 
 ---
 
-## 🤝 Contributing
+## 📦 Built With
 
-Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Router](https://reactrouter.com/)
+- [Axios](https://axios-http.com/)
 
 ---
 
-**Note:**  
-All images and content are for educational/demo purposes only. This project is not affiliated with Disney or Hotstar.
+
+
+
+
+## 📬 Contact
+
+For any questions or feedback, please contact [mk8627121@gmail.com](mk8627121@gmail.com).
