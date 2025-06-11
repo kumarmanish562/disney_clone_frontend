@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const allShows = [
   {
@@ -83,54 +84,96 @@ const Shows = () => {
       : allShows.filter((show) => show.genre === selectedGenre);
 
   return (
-    <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-4xl font-extrabold mb-10 text-gray-900 tracking-wide">TV Shows</h1>
+    <div className="bg-gradient-to-b from-[#0f0617] to-[#1a093b] min-h-screen text-white py-12 px-4 md:px-8">
+      <div className="container mx-auto">
+        {/* Page title with animated underline */}
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-10 relative inline-block after:content-[''] after:absolute after:bottom-[-10px] after:left-0 after:w-1/4 after:h-[3px] after:bg-[#00e5ff]">
+          TV Shows
+        </h1>
 
-      <div className="flex flex-wrap gap-5 mb-12 justify-center">
-        {genres.map((genre) => (
-          <button
-            key={genre}
-            onClick={() => setSelectedGenre(genre)}
-            className={`px-5 py-2 rounded-full font-semibold text-sm transition-colors duration-300
-              ${
-                selectedGenre === genre
-                  ? 'bg-[#0071CE] text-white shadow-lg'
-                  : 'bg-gray-200 text-gray-700 hover:bg-[#005BB5] hover:text-white'
+        {/* Genre filter buttons with teal accent styling */}
+        <div className="flex flex-wrap gap-4 mb-12 mt-6">
+          {genres.map(genre => (
+            <button
+              key={genre}
+              onClick={() => setSelectedGenre(genre)}
+              className={`px-5 py-2 rounded-full transition-all duration-300 transform hover:scale-105 ${
+                selectedGenre === genre 
+                  ? 'bg-[#00e5ff] text-[#0f0617] font-semibold shadow-[0_0_10px_rgba(0,229,255,0.5)]' 
+                  : 'bg-[#1a093b]/80 text-gray-300 hover:bg-[#00e5ff]/20 border border-[#00e5ff]/20'
               }`}
-          >
-            {genre}
-          </button>
-        ))}
-      </div>
+              aria-pressed={selectedGenre === genre}
+            >
+              {genre}
+            </button>
+          ))}
+        </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-        {filteredShows.map((show) => (
-          <div
-            key={show.id}
-            className="group cursor-pointer rounded-xl shadow-lg overflow-hidden bg-white hover:shadow-2xl transition-shadow duration-300"
-            title={`${show.title} (${show.year})`}
-          >
-            <div className="relative overflow-hidden">
-              <img
-                src={show.poster}
-                alt={show.title}
-                className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <div>
-                  <h3 className="text-white font-semibold text-lg">{show.title}</h3>
-                  <p className="text-gray-300 text-sm">
-                    {show.year} • {show.genre}
-                  </p>
+        {/* Show grid with enhanced styling and animations */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          {filteredShows.map(show => (
+            <Link 
+              to={`/shows/${show.id}`} 
+              key={show.id} 
+              className="group cursor-pointer"
+            >
+              <div className="overflow-hidden rounded-xl shadow-md hover:shadow-[0_0_15px_rgba(0,229,255,0.3)] transition-all duration-500 bg-[#1a093b]/30 pb-3 border border-[#00e5ff]/5 h-full">
+                {/* Show poster with hover effect */}
+                <div className="overflow-hidden relative">
+                  <img
+                    src={show.poster}
+                    alt={show.title}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://via.placeholder.com/300x450?text=No+Image';
+                    }}
+                    className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  {/* Overlay gradient that appears on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f0617]/95 via-[#0f0617]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <div>
+                      <h3 className="text-white font-bold">{show.title}</h3>
+                      <div className="flex items-center mt-1">
+                        <span className="text-[#00e5ff] text-sm">{show.year}</span>
+                        <span className="mx-2 text-[#00e5ff]">•</span>
+                        <span className="text-[#b0b3c6] text-sm">{show.genre}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Watch button that appears on hover */}
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-0 group-hover:scale-100">
+                    <button className="bg-[#00e5ff]/80 hover:bg-[#00e5ff] text-[#0f0617] p-3 rounded-full shadow-lg">
+                      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Show info below poster */}
+                <div className="px-3 pt-3">
+                  <h3 className="text-white font-semibold text-lg mb-1 line-clamp-1">{show.title}</h3>
+                  <p className="text-[#b0b3c6] text-sm">{show.year}</p>
                 </div>
               </div>
-            </div>
-            <div className="p-4 text-center">
-              <h3 className="text-lg font-semibold text-gray-900 truncate">{show.title}</h3>
-              <p className="text-sm text-gray-500">{show.year}</p>
-            </div>
+            </Link>
+          ))}
+        </div>
+        
+        {/* Empty state message when no shows match the filter */}
+        {filteredShows.length === 0 && (
+          <div className="text-center py-16 animate-pulse">
+            <p className="text-[#00e5ff] text-xl">No shows found for this genre.</p>
+            <button 
+              onClick={() => setSelectedGenre('All')} 
+              className="mt-4 underline text-white hover:text-[#00e5ff]"
+            >
+              View all shows
+            </button>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

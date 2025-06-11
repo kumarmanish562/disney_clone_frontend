@@ -75,8 +75,6 @@ const showData = {
   }
 };
 
-
-
 const ShowDetails = () => {
   const { id } = useParams();
   const show = showData[id] || {
@@ -88,102 +86,162 @@ const ShowDetails = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gradient-to-b from-[#0f0617] to-[#1a093b] min-h-screen text-white">
+      {/* Hero banner section with show backdrop */}
       <div 
         className="relative h-[70vh] bg-cover bg-center"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(4, 7, 20, 0.9), rgba(4, 7, 20, 0.6)), url(${show.banner})`,
+          backgroundImage: `linear-gradient(to bottom, rgba(15, 6, 23, 0.5), rgba(26, 9, 59, 0.95)), url(${show.banner})`,
         }}
       >
-        <div className="container mx-auto h-full flex items-center">
+        <div className="container mx-auto h-full flex items-center px-4 md:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            {/* Show poster with animation effects */}
             <div className="hidden md:block">
-              <img 
-                src={show.poster} 
-                alt={show.title} 
-                className="rounded-lg shadow-xl max-w-[240px]" 
-              />
+              <div className="overflow-hidden rounded-xl shadow-[0_0_15px_rgba(0,229,255,0.2)] transition-all duration-500 group">
+                <img 
+                  src={show.poster} 
+                  alt={show.title} 
+                  className="rounded-xl max-w-[240px] w-full transition-transform duration-700 group-hover:scale-110" 
+                />
+              </div>
             </div>
+            
+            {/* Show details section */}
             <div className="md:col-span-2">
-              <h1 className="text-4xl md:text-5xl font-bold mb-2">{show.title}</h1>
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-300 mb-4">
+              {/* Show title with underline accent */}
+              <h1 className="text-4xl md:text-5xl font-bold mb-3 text-white relative after:content-[''] after:absolute after:bottom-[-10px] after:left-0 after:w-1/6 after:h-[3px] after:bg-[#00e5ff]">
+                {show.title}
+              </h1>
+              
+              {/* Show metadata row */}
+              <div className="flex flex-wrap items-center gap-4 text-sm text-[#b0b3c6] mb-6 mt-6">
                 <span>{show.year}</span>
-                <span>•</span>
+                <span className="text-[#00e5ff]">•</span>
                 <span>{show.seasons} Season{show.seasons > 1 ? 's' : ''}</span>
-                <span>•</span>
+                <span className="text-[#00e5ff]">•</span>
                 <span>{show.episodes} Episodes</span>
-                <span>•</span>
+                <span className="text-[#00e5ff]">•</span>
                 <span>{show.rating}</span>
-                <span>•</span>
+                <span className="text-[#00e5ff]">•</span>
                 <span>{show.genre.join(', ')}</span>
               </div>
-              <p className="text-lg mb-6 max-w-2xl">{show.description}</p>
-              <button className="bg-disney-blue hover:bg-blue-700 text-white py-3 px-8 rounded-md flex items-center">
+              
+              {/* Show description with enhanced readability */}
+              <p className="text-lg mb-8 max-w-2xl text-gray-300 leading-relaxed">{show.description}</p>
+              
+              {/* Watch Now button with teal color scheme and animation */}
+              <button className="bg-[#00e5ff] hover:bg-[#00b8d9] text-[#0f0617] py-3 px-8 rounded-lg font-bold flex items-center space-x-2 transform transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,229,255,0.5)]">
                 <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                 </svg>
-                Watch Now
+                <span>Watch Now</span>
               </button>
             </div>
           </div>
         </div>
       </div>
       
-      <div className="container mx-auto py-10">
+      {/* Content section with show details */}
+      <div className="container mx-auto py-12 px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Main content column */}
           <div className="md:col-span-2">
-            <h2 className="text-2xl font-bold mb-4">About the Show</h2>
-            <p className="mb-8">{show.description}</p>
+            {/* About section with section title styling */}
+            <h2 className="text-2xl font-bold mb-4 text-white relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-[#00e5ff]">
+              About the Show
+            </h2>
+            <p className="mb-8 text-gray-300 leading-relaxed">{show.description}</p>
             
-            <h2 className="text-2xl font-bold mb-4">Cast</h2>
-            <div className="flex flex-wrap gap-4 mb-8">
+            {/* Cast section with styled cards */}
+            <h2 className="text-2xl font-bold mb-6 text-white relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-[#00e5ff]">
+              Cast
+            </h2>
+            <div className="flex flex-wrap gap-4 mb-10">
               {show.cast.map((actor, index) => (
-                <div key={index} className="bg-disney-gray p-3 rounded-lg">
+                <div 
+                  key={index} 
+                  className="bg-[#1a093b]/80 p-3 rounded-lg border border-[#00e5ff]/20 text-[#b0b3c6] hover:bg-[#00e5ff]/10 hover:text-white hover:border-[#00e5ff]/40 transition-all duration-300"
+                >
                   {actor}
                 </div>
               ))}
             </div>
             
-            <h2 className="text-2xl font-bold mb-4">Creator</h2>
-            <p className="mb-8">{show.creator}</p>
+            {/* Creator section */}
+            <h2 className="text-2xl font-bold mb-4 text-white relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-[#00e5ff]">
+              Creator
+            </h2>
+            <p className="mb-8 text-[#00e5ff]">{show.creator}</p>
 
-            {/* Episodes section */}
-            <h2 className="text-2xl font-bold mb-4">Episodes</h2>
+            {/* Episodes section with enhanced styling */}
+            <h2 className="text-2xl font-bold mb-6 text-white relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-[#00e5ff]">
+              Episodes
+            </h2>
             <div className="space-y-4 mb-8">
               {Array.from({ length: Math.min(3, show.episodes || 0) }, (_, i) => (
-                <div key={i} className="bg-disney-gray p-4 rounded-lg flex items-center">
-                  <div className="w-16 h-16 mr-4 bg-black rounded flex items-center justify-center">
-                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                <div 
+                  key={i} 
+                  className="bg-[#1a093b]/50 p-4 rounded-lg border border-[#00e5ff]/10 hover:border-[#00e5ff]/30 hover:bg-[#1a093b]/80 flex items-center transition-all duration-300 group cursor-pointer"
+                >
+                  <div className="w-16 h-16 mr-4 bg-[#0f0617] rounded-md flex items-center justify-center overflow-hidden relative group-hover:shadow-[0_0_10px_rgba(0,229,255,0.3)]">
+                    <div className="absolute inset-0 bg-[#00e5ff]/0 group-hover:bg-[#00e5ff]/10 transition-colors duration-300"></div>
+                    <svg className="w-8 h-8 text-[#00e5ff] transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold">Episode {i + 1}</h3>
-                    <p className="text-gray-400 text-sm">48 min</p>
+                    <h3 className="font-semibold text-white group-hover:text-[#00e5ff] transition-colors duration-300">Episode {i + 1}</h3>
+                    <p className="text-[#b0b3c6] text-sm">48 min</p>
                   </div>
                 </div>
               ))}
               {show.episodes > 3 && (
-                <button className="text-disney-blue hover:underline">View All Episodes</button>
+                <button className="text-[#00e5ff] hover:text-[#00b8d9] transition-colors duration-300 flex items-center">
+                  <span>View All Episodes</span>
+                  <svg className="w-4 h-4 ml-1 transform transition-transform duration-300 group-hover:translate-x-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
               )}
             </div>
           </div>
           
+          {/* Sidebar with additional information */}
           <div>
-            <div className="bg-disney-gray p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4">Information</h3>
-              <div className="space-y-4">
+            <div className="bg-gradient-to-b from-[#1a093b] to-[#0f0617] p-6 rounded-xl shadow-lg border border-[#00e5ff]/10 hover:shadow-[0_0_15px_rgba(0,229,255,0.15)] transition-all duration-300">
+              <h3 className="text-xl font-bold mb-6 text-white relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-1/4 after:h-[2px] after:bg-[#00e5ff]">
+                Information
+              </h3>
+              <div className="space-y-6 text-gray-300">
                 <div>
-                  <h4 className="text-gray-400">Available in</h4>
-                  <p>{show.languages.join(', ')}</p>
+                  <h4 className="text-[#b0b3c6] font-semibold mb-2">Available in</h4>
+                  <p className="text-[#00e5ff]">{show.languages.join(', ')}</p>
                 </div>
                 <div>
-                  <h4 className="text-gray-400">Genre</h4>
-                  <p>{show.genre.join(', ')}</p>
+                  <h4 className="text-[#b0b3c6] font-semibold mb-2">Genre</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {show.genre.map((item, index) => (
+                      <span 
+                        key={index}
+                        className="px-3 py-1 bg-[#1a093b]/50 border border-[#00e5ff]/30 rounded-full text-sm text-[#00e5ff] hover:bg-[#00e5ff]/20 transition-all duration-300"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <div>
-                  <h4 className="text-gray-400">Release Year</h4>
-                  <p>{show.year}</p>
+                  <h4 className="text-[#b0b3c6] font-semibold mb-2">Release Year</h4>
+                  <p className="text-[#00e5ff]">{show.year}</p>
+                </div>
+                <div>
+                  <h4 className="text-[#b0b3c6] font-semibold mb-2">Seasons</h4>
+                  <p className="text-[#00e5ff]">{show.seasons}</p>
+                </div>
+                <div>
+                  <h4 className="text-[#b0b3c6] font-semibold mb-2">Episodes</h4>
+                  <p className="text-[#00e5ff]">{show.episodes}</p>
                 </div>
               </div>
             </div>
