@@ -16,6 +16,7 @@ import nationalGVideo from '../assets/Videos/national-geographic.mp4';
 import pixarVideo from '../assets/Videos/pixar.mp4';
 import starwarVideo from '../assets/Videos/star-wars.mp4';
 
+// Movie and show data arrays
 const trendingMovies = [
   {
     id: 'avengers-endgame',
@@ -115,6 +116,7 @@ const disneyOriginals = [
   }
 ];
 
+// Brand data with logos and videos
 const brands = [
   {
     name: 'Disney',
@@ -145,65 +147,77 @@ const brands = [
 
 const Home = () => {
   return (
-    <div className="bg-gray-950 text-white min-h-screen">
+    <div className="bg-gradient-to-b from-[#0f0617] to-[#0f0617] text-white min-h-screen">
+      {/* Hero banner/carousel */}
       <Hero />
 
-      {/* Disney+ Brands Section */}
-      <div className="py-10 container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6 text-white">Explore by Brands</h2>
+      {/* Disney+ Brands Section with enhanced styling */}
+      <div className="py-12 container mx-auto px-4 md:px-8">
+        {/* Section title with animated underline on hover */}
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 inline-block relative after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-[#00e5ff] hover:after:w-full after:transition-all after:duration-300">
+          Explore by Brands
+        </h2>
+        
+        {/* Brands grid with animations */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
           {brands.map(({ name, logo, video }) => (
             <div
               key={name}
-              className="relative rounded-xl overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105"
+              className="relative rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-[0_0_15px_rgba(0,229,255,0.3)] transform transition-all duration-500 hover:scale-105"
               style={{
-                backgroundColor: '#ADD8E6',
-                border: '2px solidrgb(81, 97, 168)',
+                backgroundColor: 'rgba(26, 9, 59, 0.5)',
+                border: '2px solid rgba(0, 229, 255, 0.1)',
               }}
               title={name}
             >
+              {/* Background video that plays on hover */}
               <video
                 src={video}
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-30 transition-opacity duration-300 z-0"
+                className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-30 transition-opacity duration-500 z-0"
               />
+              
+              {/* Brand logo */}
               <div className="relative z-10 flex items-center justify-center h-32 sm:h-36 p-4">
                 <img
                   src={logo}
                   alt={name}
-                  className="h-12 sm:h-14 object-contain transition duration-300"
+                  className="h-12 sm:h-14 object-contain transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />
               </div>
-              <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-white text-lg font-semibold drop-shadow-lg">{name}</span>
+              
+              {/* Brand name that appears on hover */}
+              <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                <span className="text-white text-lg font-semibold drop-shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  {name}
+                </span>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Movie Sections */}
+      {/* Content category sections */}
       <CategoryRow
         title="Trending Movies"
         items={trendingMovies}
         type="movies"
-        titleColor="text-blue-300"
       />
+      
       <CategoryRow
         title="Popular Shows"
         items={popularShows}
         type="shows"
-        titleColor="text-blue-300"
       />
+      
       <CategoryRow
         title="Disney+ Originals"
         items={disneyOriginals}
         type="movies"
-        titleColor="text-blue-300"
       />
     </div>
   );

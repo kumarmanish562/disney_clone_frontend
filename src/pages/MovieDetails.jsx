@@ -35,7 +35,7 @@ const movieData = {
     duration: '2h 4m',
     rating: 'PG-13',
     genre: ['Action', 'Adventure', 'Sci-Fi'],
-    description: `Carol Danvers becomes one of the universe’s most powerful heroes when Earth is caught in the middle of a galactic war between two alien races.`,
+    description: `Carol Danvers becomes one of the universe's most powerful heroes when Earth is caught in the middle of a galactic war between two alien races.`,
     banner: 'https://image.tmdb.org/t/p/original/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg',
     poster: 'https://image.tmdb.org/t/p/w500/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg',
     director: 'Anna Boden, Ryan Fleck',
@@ -81,79 +81,125 @@ const MovieDetails = () => {
   };
 
   return (
-    <div className="bg-[#f2f4f7] min-h-screen">
+    // Main container with dark theme gradient background
+    <div className="bg-gradient-to-b from-[#0f0617] to-[#1a093b] min-h-screen text-white">
+      {/* Hero banner section with movie backdrop */}
       <div 
         className="relative h-[70vh] bg-cover bg-center"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(4, 7, 20, 0.9), rgba(4, 7, 20, 0.6)), url(${movie.banner})`,
+          backgroundImage: `linear-gradient(to bottom, rgba(15, 6, 23, 0.5), rgba(26, 9, 59, 0.95)), url(${movie.banner})`,
         }}
       >
-        <div className="container mx-auto h-full flex items-center">
+        <div className="container mx-auto h-full flex items-center px-4 md:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            {/* Movie poster with animation effects */}
             <div className="hidden md:block">
-              <img 
-                src={movie.poster} 
-                alt={movie.title} 
-                className="rounded-lg shadow-xl max-w-[240px]" 
-              />
+              <div className="overflow-hidden rounded-xl shadow-[0_0_15px_rgba(0,229,255,0.2)] transition-all duration-500 group">
+                <img 
+                  src={movie.poster} 
+                  alt={movie.title} 
+                  className="rounded-xl max-w-[240px] w-full transition-transform duration-700 group-hover:scale-110" 
+                />
+              </div>
             </div>
+            
+            {/* Movie details section */}
             <div className="md:col-span-2">
-              <h1 className="text-4xl md:text-5xl font-bold mb-2 text-gray-900">{movie.title}</h1>
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-4">
+              {/* Movie title with underline accent */}
+              <h1 className="text-4xl md:text-5xl font-bold mb-3 text-white relative after:content-[''] after:absolute after:bottom-[-10px] after:left-0 after:w-1/6 after:h-[3px] after:bg-[#00e5ff]">
+                {movie.title}
+              </h1>
+              
+              {/* Movie metadata row */}
+              <div className="flex flex-wrap items-center gap-4 text-sm text-[#b0b3c6] mb-6 mt-6">
                 <span>{movie.year}</span>
-                <span>•</span>
+                <span className="text-[#00e5ff]">•</span>
                 <span>{movie.duration}</span>
-                <span>•</span>
+                <span className="text-[#00e5ff]">•</span>
                 <span>{movie.rating}</span>
-                <span>•</span>
+                <span className="text-[#00e5ff]">•</span>
                 <span>{movie.genre.join(', ')}</span>
               </div>
-              <p className="text-lg mb-6 max-w-2xl text-gray-700">{movie.description}</p>
-              <button className="bg-[#0071CE] hover:bg-[#005BB5] text-white py-3 px-8 rounded-md flex items-center">
+              
+              {/* Movie description with enhanced readability */}
+              <p className="text-lg mb-8 max-w-2xl text-gray-300 leading-relaxed">{movie.description}</p>
+              
+              {/* Watch Now button with teal color scheme and animation */}
+              <button className="bg-[#00e5ff] hover:bg-[#00b8d9] text-[#0f0617] py-3 px-8 rounded-lg font-bold flex items-center space-x-2 transform transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,229,255,0.5)]">
                 <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                 </svg>
-                Watch Now
+                <span>Watch Now</span>
               </button>
             </div>
           </div>
         </div>
       </div>
       
-      <div className="container mx-auto py-10">
+      {/* Content section with movie details */}
+      <div className="container mx-auto py-12 px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Main content column */}
           <div className="md:col-span-2">
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">About the Movie</h2>
-            <p className="mb-8 text-gray-700">{movie.description}</p>
+            {/* About section with section title styling */}
+            <h2 className="text-2xl font-bold mb-4 text-white relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-[#00e5ff]">
+              About the Movie
+            </h2>
+            <p className="mb-8 text-gray-300 leading-relaxed">{movie.description}</p>
             
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">Cast</h2>
-            <div className="flex flex-wrap gap-4 mb-8">
+            {/* Cast section with styled cards */}
+            <h2 className="text-2xl font-bold mb-6 text-white relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-[#00e5ff]">
+              Cast
+            </h2>
+            <div className="flex flex-wrap gap-4 mb-10">
               {movie.cast.map((actor, index) => (
-                <div key={index} className="bg-white p-3 rounded-lg shadow-sm text-gray-800">
+                <div 
+                  key={index} 
+                  className="bg-[#1a093b]/80 p-3 rounded-lg border border-[#00e5ff]/20 text-[#b0b3c6] hover:bg-[#00e5ff]/10 hover:text-white hover:border-[#00e5ff]/40 transition-all duration-300"
+                >
                   {actor}
                 </div>
               ))}
             </div>
             
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">Director</h2>
-            <p className="mb-8 text-gray-700">{movie.director}</p>
+            {/* Director section */}
+            <h2 className="text-2xl font-bold mb-4 text-white relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-[#00e5ff]">
+              Director
+            </h2>
+            <p className="mb-8 text-[#00e5ff]">{movie.director}</p>
           </div>
           
+          {/* Sidebar with additional information */}
           <div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Information</h3>
-              <div className="space-y-4 text-gray-700">
+            <div className="bg-gradient-to-b from-[#1a093b] to-[#0f0617] p-6 rounded-xl shadow-lg border border-[#00e5ff]/10 hover:shadow-[0_0_15px_rgba(0,229,255,0.15)] transition-all duration-300">
+              <h3 className="text-xl font-bold mb-6 text-white relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-1/4 after:h-[2px] after:bg-[#00e5ff]">
+                Information
+              </h3>
+              <div className="space-y-6 text-gray-300">
                 <div>
-                  <h4 className="text-gray-500 font-semibold">Available in</h4>
-                  <p>{movie.languages.join(', ')}</p>
+                  <h4 className="text-[#b0b3c6] font-semibold mb-2">Available in</h4>
+                  <p className="text-[#00e5ff]">{movie.languages.join(', ')}</p>
                 </div>
                 <div>
-                  <h4 className="text-gray-500 font-semibold">Genre</h4>
-                  <p>{movie.genre.join(', ')}</p>
+                  <h4 className="text-[#b0b3c6] font-semibold mb-2">Genre</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {movie.genre.map((item, index) => (
+                      <span 
+                        key={index}
+                        className="px-3 py-1 bg-[#1a093b]/50 border border-[#00e5ff]/30 rounded-full text-sm text-[#00e5ff] hover:bg-[#00e5ff]/20 transition-all duration-300"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <div>
-                  <h4 className="text-gray-500 font-semibold">Release Year</h4>
-                  <p>{movie.year}</p>
+                  <h4 className="text-[#b0b3c6] font-semibold mb-2">Release Year</h4>
+                  <p className="text-[#00e5ff]">{movie.year}</p>
+                </div>
+                <div>
+                  <h4 className="text-[#b0b3c6] font-semibold mb-2">Duration</h4>
+                  <p className="text-[#00e5ff]">{movie.duration}</p>
                 </div>
               </div>
             </div>
