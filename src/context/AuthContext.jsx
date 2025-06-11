@@ -1,167 +1,109 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const AuthContext = createContext();
+// Export the context directly
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Check for existing user session on mount
+  // Check if user is already logged in on component mount
   useEffect(() => {
-    // Try to get stored user data from localStorage
-    const storedUser = localStorage.getItem('disney_user');
-    const storedToken = localStorage.getItem('disney_token');
-    
-    if (storedUser && storedToken) {
+    const checkAuthStatus = async () => {
       try {
-        const userData = JSON.parse(storedUser);
-        setUser(userData);
-      } catch (e) {
-        // If JSON parsing fails, clear localStorage
-        localStorage.removeItem('disney_user');
-        localStorage.removeItem('disney_token');
+        const token = localStorage.getItem('authToken');
+        
+        if (token) {
+          // Optional: Validate token with your backend
+          // const response = await axios.get('/api/auth/validate-token');
+          // setUser(response.data.user);
+          
+          // For now, just set basic user info from local storage
+          const userData = localStorage.getItem('userData');
+          if (userData) {
+            setUser(JSON.parse(userData));
+          }
+        }
+      } catch (err) {
+        console.error('Auth status check failed:', err);
+        // Clear invalid tokens
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userData');
+      } finally {
+        setIsLoading(false);
       }
-    }
-    
-    setLoading(false);
+    };
+
+    checkAuthStatus();
   }, []);
 
-  // Login function - handles API call and state management
   const login = async (email, password) => {
+    setError(null);
     try {
-      setLoading(true);
-      setError(null);
+      // Replace with your actual API endpoint
+      const response = await axios.post('/api/auth/login', { email, password });
       
-      // Replace with your actual API call
-      // const response = await fetch('your-api-url/login', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email, password })
-      // });
+      const { token, user } = response.data;
       
-      // const data = await response.json();
+      // Store token and user data
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('userData', JSON.stringify(user));
       
-      // if (!response.ok) {
-      //   throw new Error(data.message || 'Login failed');
-      // }
-
-      // Placeholder for testing - replace with actual API response
-      const data = {
-        user: { id: '123', email, name: 'Test User' },
-        token: 'test-token-123'
-      };
-      
-      // Store in localStorage for persistence
-      localStorage.setItem('disney_user', JSON.stringify(data.user));
-      localStorage.setItem('disney_token', data.token);
-      
-      setUser(data.user);
-      navigate('/'); // Redirect to home page after login
+      setUser(user);
       return true;
     } catch (err) {
-      setError(err.message || 'An error occurred during login');
+      setError(err.response?.data?.message || 'Login failed. Please try again.');
       return false;
-    } finally {
-      setLoading(false);
     }
   };
 
-  // Logout function - clears state and storage
+  const signup = async (userData) => {
+    setError(null);
+    try {
+      // Replace with your actual API endpoint
+      const response = await axios.post('/api/auth/signup', userData);
+      
+      const { token, user } = response.data;
+      
+      // Store token and user data
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('userData', JSON.stringify(user));
+      
+      setUser(user);
+      return true;
+    } catch (err) {
+      setError(err.response?.data?.message || 'Signup failed. Please try again.');
+      return false;
+    }
+  };
+
   const logout = () => {
-    localStorage.removeItem('disney_user');
-    localStorage.removeItem('disney_token');
+    // Clear stored data
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    
+    // Reset state
     setUser(null);
-    navigate('/login');
   };
 
-  // Register function
-  const register = async (name, email, password) => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      // Replace with your actual API call
-      // const response = await fetch('your-api-url/register', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ name, email, password })
-      // });
-      
-      // const data = await response.json();
-      
-      // if (!response.ok) {
-      //   throw new Error(data.message || 'Registration failed');
-      // }
-
-      // Placeholder for testing
-      const data = {
-        user: { id: '123', email, name },
-        token: 'test-token-123'
-      };
-      
-      localStorage.setItem('disney_user', JSON.stringify(data.user));
-      localStorage.setItem('disney_token', data.token);
-      
-      setUser(data.user);
-      navigate('/');
-      return true;
-    } catch (err) {
-      setError(err.message || 'An error occurred during registration');
-      return false;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Get the authentication token
-  const getToken = () => {
-    return localStorage.getItem('disney_token');
+  // Create value object with all context data
+  const value = {
+    user,
+    isAuthenticated: !!user,
+    isLoading,
+    login,
+    logout,
+    signup,
+    error
   };
 
   return (
-    <AuthContext.Provider 
-      value={{ 
-        user, 
-        login, 
-        logout, 
-        register, 
-        loading, 
-        error,
-        isAuthenticated: !!user,
-        getToken
-      }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-// Custom hook for using auth context
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
-
-// Protected route component
-export const RequireAuth = ({ children }) => {
-  const { user, loading } = useAuth();
-  const navigate = useNavigate();
-  
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate('/login', { replace: true });
-    }
-  }, [user, loading, navigate]);
-  
-  if (loading) {
-    return <div className="text-[#00e5ff] font-bold text-center p-8">Loading...</div>;
-  }
-  
-  return user ? children : null;
 };
